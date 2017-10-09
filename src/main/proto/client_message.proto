@@ -1,0 +1,15 @@
+syntax = "proto2";
+
+package com.mycompany.midtermproject2.proto;
+
+message ClientMessage {
+    enum MsgType {
+        CHAT = 0;
+        NICK = 1;
+    }
+
+    required MsgType type = 1;
+
+    // used in CHAT and NICK types
+    optional string body = 2;
+}

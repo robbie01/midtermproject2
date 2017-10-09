@@ -1,0 +1,23 @@
+syntax = "proto2";
+
+package com.mycompany.midtermproject2.proto;
+
+message ServerMessage {
+    enum MsgType {
+        CHAT = 0;
+        INFO = 1;
+        ERR  = 2;
+    }
+
+    required MsgType type = 1;
+
+    // Used in CHAT and INFO types
+    optional string body = 2;
+
+    enum ErrType {
+        NICK_IN_USE = 0;
+        BAD_REQUEST = 1;
+    }
+
+    optional ErrType code = 3;
+}

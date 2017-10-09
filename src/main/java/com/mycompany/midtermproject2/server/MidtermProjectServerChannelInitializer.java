@@ -1,6 +1,6 @@
 package com.mycompany.midtermproject2.server;
 
-import com.mycompany.midtermproject2.proto.ClientMessage;
+import com.mycompany.midtermproject2.proto.ClientMessageOuterClass.ClientMessage;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
