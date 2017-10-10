@@ -8,6 +8,7 @@ import io.netty.channel.ChannelId;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
+import io.netty.util.concurrent.GlobalEventExecutor;
 import java.net.InetSocketAddress;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -17,15 +18,17 @@ import java.util.logging.Level;
 
 public class MidtermProjectServerHandler extends SimpleChannelInboundHandler<ClientMessage> {
     private static final Map<ChannelId, String> nicknamesMap = new ConcurrentHashMap<>();
-    private static final ChannelGroup clients = new DefaultChannelGroup();
+    private static final ChannelGroup clients = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ClientMessage msg) {
         if (nicknamesMap.get(ctx.channel().id()) == null) {
             nicknamesMap.put(ctx.channel().id(), ((InetSocketAddress)ctx.channel().remoteAddress()).toString());
+	    clients.add(ctx.channel());
         }
-        
-        
+
+	switch
+	
         ServerMessage.Builder builder = ServerMessage.newBuilder();
         
         ctx.writeAndFlush(builder.build());

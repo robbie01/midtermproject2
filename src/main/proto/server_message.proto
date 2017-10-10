@@ -19,5 +19,6 @@ message ServerMessage {
         BAD_REQUEST = 1;
     }
 
+    // Used in ERR type
     optional ErrType code = 3;
 }

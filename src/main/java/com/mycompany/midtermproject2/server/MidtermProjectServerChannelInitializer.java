@@ -15,12 +15,12 @@ public class MidtermProjectServerChannelInitializer extends ChannelInitializer<S
     public void initChannel(SocketChannel ch) {
 	ChannelPipeline p = ch.pipeline();
 
-	p.addLast(new ProtobufVarint32FrameDecoder());
-	p.addLast(new ProtobufDecoder(ClientMessage.getDefaultInstance()));
+	p.addLast(new ProtobufVarint32FrameDecoder()); // INCOMING: decode Varint32 at beginning of message to get message length
+	p.addLast(new ProtobufDecoder(ClientMessage.getDefaultInstance())); // INCOMING: interpret message as ClientMessage
 
-	p.addLast(new ProtobufVarint32LengthFieldPrepender());
-	p.addLast(new ProtobufEncoder());
+	p.addLast(new ProtobufVarint32LengthFieldPrepender()); // OUTGOING: add Varint32 to beginning of message
+	p.addLast(new ProtobufEncoder()); // OUTGOING: encode protobuf object as bytes
 
-	p.addLast(new MidtermProjectServerHandler());
+	p.addLast(new MidtermProjectServerHandler()); // IN/OUT: main server logic
     }
 }
